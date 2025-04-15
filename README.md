@@ -3,6 +3,10 @@
 This repo is a template for your semester project. It includes most of the infrastructure setup (containers), sample
 databases, and example UI pages. Explore it fully and ask questions!
 
+## Overview
+
+Our project is a Child Therapist Database built around our five personas: a therapist, an art therapist specialist, a child, a guardian, and an art therapist specialist. We incorporated numerous attributes with these entities, including phone numbers, emails, names, and unique identifiers. Our database's purpose is to assist matching virtual children with therapists based on their individual art preferences, chronic conditions, personality traits, and context-aware replies.
+
 ## Prerequisites
 
 - A GitHub Account
