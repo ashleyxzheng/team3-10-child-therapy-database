@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response, current_app
 from backend.db_connection import db
 
-artTherapies = Blueprint('artTherapy', __name__)
+artTherapies = Blueprint('artTherapies', __name__)
 
 @artTherapies.route('/art-therapies', methods=['GET'])
 def get_art_therapies():
@@ -18,14 +18,17 @@ def post_art_therapy():
 
     new_art_therapy = request.json
     therapy_id = new_art_therapy['Therapy_ID']
-    name = new_art_therapy['Name']
-    description = new_art_therapy['Description']
+    artType = new_art_therapy['Art_Type']
+    medium = new_art_therapy['Medium']
+    resource = new_art_therapy['Resources']
+    benefits = new_art_therapy['Benefits']
+    prompt = new_art_therapy['Prompt']
 
     insert_query = '''INSERT INTO Art_Therapy
-     (Therapy_ID, Name, Description) VALUES 
-     (%s, %s, %s)'''
+     (Therapy_ID, Art_Type, Medium, Resources, Benefits, Prompt) VALUES 
+     (%s, %s, %s, %s, %s, %s)'''
     
-    data = (therapy_id, name, description)
+    data = (therapy_id, artType, medium, resource, benefits, prompt)
 
     cursor = db.get_db().cursor()
     cursor.execute(insert_query, data)
@@ -50,17 +53,23 @@ def update_art_therapy(artTherapyID):
     current_app.logger.info('PUT /art-therapies route hit')
 
     updated_art_therapy = request.json
-    name = updated_art_therapy['Name']
-    description = updated_art_therapy['Description']
+    artType = updated_art_therapy['Art_Type']
+    medium = updated_art_therapy['Medium']
+    resource = updated_art_therapy['Resources']
+    benefits = updated_art_therapy['Benefits']
+    prompt = updated_art_therapy['Prompt']
 
     query = '''UPDATE Art_Therapy SET 
-        Name = %s,
-        Description = %s
+        Art_Type = %s,
+        Medium = %s,
+        Resources = %s,
+        Benefits = %s,
+        Prompt = %s
         WHERE 
         Therapy_ID = %s
         '''
     
-    data = (name, description, artTherapyID)
+    data = (artType, medium, resource, benefits, prompt, artTherapyID)
 
     cursor = db.get_db().cursor()
     cursor.execute(query, data)

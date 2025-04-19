@@ -107,10 +107,8 @@ def update_therapist(userID):
 def delete_therapist(userID):
     current_app.logger.info('DELETE /therapist route')
 
-    query = '''DELETE FROM Therapist WHERE licenseNumber = $s'''
-
     cursor = db.get_db().cursor()
-    r = cursor.execute(query)
+    cursor.execute('''DELETE FROM Therapist WHERE License_Number = %s''', (userID,))
     db.get_db().commit()
     response = make_response(jsonify({"Message" : "Deleted", "licenseID" : userID}))
     return response
