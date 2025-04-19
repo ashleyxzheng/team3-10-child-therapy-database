@@ -8,6 +8,11 @@ import os
 from dotenv import load_dotenv
 
 from backend.therapy.trainingSupervisor_routes import supervisors
+from backend.therapy.therapist_routes import therapists
+from backend.therapy.guardian_routes import guardians
+from backend.therapy.specialist_routes import specialists
+from backend.therapy.child_routes import children
+from backend.therapy.artTherapy_routes import artTherapies 
 
 def create_app():
     app = Flask(__name__)
@@ -46,6 +51,11 @@ def create_app():
     app.register_blueprint(products,    url_prefix='/p')
 
     app.register_blueprint(supervisors)
+    app.register_blueprint(therapists)
+    app.register_blueprint(guardians)
+    app.register_blueprint(specialists)
+    app.register_blueprint(children)
+    app.register_blueprint(artTherapies)
 
     # Don't forget to return the app object
     return app

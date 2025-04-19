@@ -17,7 +17,7 @@ def get_supervisors():
     return the_response
 
 @supervisors.route('/training-supervisors', methods=['POST'])
-def post_supervisor():
+def post_supervisors():
     current_app.logger.info('POST /supervisors route hit')
 
     new_sup = request.json
