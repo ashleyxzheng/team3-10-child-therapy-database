@@ -56,6 +56,28 @@ st.markdown(
     """
 )
 
+# Sample data with image URLs
+data = {
+    "Name": ["Painting", "Carving", "Sculpting"],
+    "Age": ["Painting is a popular option for art therapy. It allows the individual to express themselves creatively and experiment with color and texture. Painting can help to decrease anxiety and improve mood. Individuals can use various painting techniques, like finger painting, acrylics, or watercolors to create art.", "Carving is a great option for individuals who want to work with a tangible and durable medium. Carving can include: woodworking, stone carving, sculpting using items like clay or wax. This type of art therapy can help individuals to focus and destress while also providing a sense of accomplishment as they see their creations come to life.", "Sculpting, like carving, can be done using various mediums. It involves creating three-dimensional pieces that can be tactile, allowing individuals to engage their sense of touch.", "Sculpting can help provide a sense of control and accomplishment, especially for individuals who are feeling overwhelmed."],
+    "Image": [
+        "https://webstockreview.net/images/draw-clipart.jpg",
+        "https://static.vecteezy.com/system/resources/previews/019/470/509/non_2x/illustration-wood-carving-chisel-isolated-on-white-background-carpentry-hand-tools-with-wooden-handle-free-vector.jpg",
+        "https://clipart-library.com/2023/girl-does-clay-sculpting_698371-2.jpg"
+    ]
+}
+
+df = pd.DataFrame(data)
+
+st.title("Table with Images")
+
+# Loop to create a pseudo-table
+for index, row in df.iterrows():
+    cols = st.columns([1, 1, 2])
+    cols[0].write(row["Name"])
+    cols[1].write(row["Age"])
+    cols[2].image(row["Image"], width=80)
+
 # Add a section for contact or support if needed
 st.sidebar.markdown("### Need Help?")
 st.sidebar.info(
