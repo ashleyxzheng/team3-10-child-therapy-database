@@ -1,5 +1,8 @@
 import streamlit as st
+import pandas as pd
 from modules.nav import SideBarLinks
+import os
+from PIL import Image
 
 SideBarLinks()
 
@@ -34,59 +37,82 @@ st.markdown(
 
     ## Team
     This project is developed as part of CS 3200 - Database Design.
-
-
-    ## Art Therapy Forms: 
-
-    1. Painting
-    Painting is a popular option for art therapy. It allows the individual to express themselves creatively and experiment with color and texture. Painting can help to decrease anxiety and improve mood. Individuals can use various painting techniques, like finger painting, acrylics, or watercolors to create art.
-
-    2. Carving
-    Carving is a great option for individuals who want to work with a tangible and durable medium. Carving can include:
-    - Woodworking
-    - Stone carving
-    - Sculpting using items like clay or wax
-    This type of art therapy can help individuals to focus and destress while also providing a sense of accomplishment as they see their creations come to life.
-
-    3. Sculpting
-    Sculpting, like carving, can be done using various mediums. It involves creating three-dimensional pieces that can be tactile, allowing individuals to engage their sense of touch. Sculpting can help provide a sense of control and accomplishment, especially for individuals who are feeling overwhelmed.
-
-    4. Using Textiles
-    Textile art includes any kind of handicrafts, such as knitting, crocheting, and sewing. This form of art therapy is ideal for individuals who like working with their hands and who enjoy precision and detail-oriented work. Textile art can decrease anxiety and depression and foster a sense of accomplishment as individuals create functional or decorative pieces.
-
-    5. Drawing
-    Drawing is another popular option for art therapy. It involves using pens, pencils, or markers to create two-dimensional pieces. Drawing can help to reduce anxiety and provide a sense of control as individuals create something for themselves. Drawing can be used to symbolically represent something or create something more abstract that evokes a feeling.
     """
 )
 
-# Sample data with image URLs
+st.markdown("## Art Therapy Forms")
+
+# Sample data for art therapy forms with base64 encoded placeholder images
 data = {
-    "Name": ["Painting", "Carving", "Sculpting"],
-    "Age": ["Painting is a popular option for art therapy. It allows the individual to express themselves creatively and experiment with color and texture. Painting can help to decrease anxiety and improve mood. Individuals can use various painting techniques, like finger painting, acrylics, or watercolors to create art.", "Carving is a great option for individuals who want to work with a tangible and durable medium. Carving can include: woodworking, stone carving, sculpting using items like clay or wax. This type of art therapy can help individuals to focus and destress while also providing a sense of accomplishment as they see their creations come to life.", "Sculpting, like carving, can be done using various mediums. It involves creating three-dimensional pieces that can be tactile, allowing individuals to engage their sense of touch.", "Sculpting can help provide a sense of control and accomplishment, especially for individuals who are feeling overwhelmed."],
-    "Image": [
-        "https://webstockreview.net/images/draw-clipart.jpg",
-        "https://static.vecteezy.com/system/resources/previews/019/470/509/non_2x/illustration-wood-carving-chisel-isolated-on-white-background-carpentry-hand-tools-with-wooden-handle-free-vector.jpg",
-        "https://clipart-library.com/2023/girl-does-clay-sculpting_698371-2.jpg"
+    "Form": ["Painting 🎨", "Carving 🗿", "Sculpting 🏺", "Textiles 🧶", "Drawing ✏️"],
+    "Description": [
+        "Express creativity through colors and textures using various techniques like finger painting, acrylics, or watercolors.",
+        "Work with tangible materials like wood or stone to create durable art pieces while focusing and destressing.",
+        "Create three-dimensional pieces using clay or other materials to engage tactile senses and gain a sense of control.",
+        "Engage in handicrafts like knitting, crocheting, and sewing for precision-oriented creative expression.",
+        "Use pens, pencils, or markers to create two-dimensional pieces, helping reduce anxiety through visual expression."
+    ],
+    "Benefits": [
+        "Decreases anxiety, improves mood, encourages self-expression",
+        "Builds focus, provides sense of accomplishment, reduces stress",
+        "Enhances tactile engagement, builds confidence, improves motor skills",
+        "Reduces anxiety, builds patience, creates functional art",
+        "Promotes emotional release, increases control, supports symbolic expression"
     ]
 }
 
 df = pd.DataFrame(data)
 
-st.title("Table with Images")
-
-# Loop to create a pseudo-table
+# Display art therapy forms in an organized layout with images
 for index, row in df.iterrows():
-    cols = st.columns([1, 1, 2])
-    cols[0].write(row["Name"])
-    cols[1].write(row["Age"])
-    cols[2].image(row["Image"], width=80)
+    st.markdown(f"### {row['Form']}")
+    
+    # Create three columns: image, description, benefits
+    col1, col2, col3 = st.columns([1, 1.5, 1.5])
+    
+    # Display a colored box with the emoji in the first column
+    with col1:
+        emoji = row['Form'].split()[-1]  # Get the emoji from the form name
+        st.markdown(
+            f"""
+            <div style="
+                background-color: #f0f2f6;
+                border-radius: 10px;
+                padding: 20px;
+                text-align: center;
+                font-size: 48px;
+                height: 100px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            ">
+                {emoji}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    
+    # Display description and benefits in the other columns
+    with col2:
+        st.markdown("**Description:**")
+        st.write(row["Description"])
+    
+    with col3:
+        st.markdown("**Benefits:**")
+        st.write(row["Benefits"])
+    
+    st.markdown("---")
 
-# Add a section for contact or support if needed
-st.sidebar.markdown("### Need Help?")
+# Updated contact section with team photos
+st.sidebar.markdown("### Contact Us")
 st.sidebar.info(
     """
     For support or questions, please contact:
-    - System Administrator
-    - Technical Support Team
+    - Anushka Anand
+    - Krish Kumar
+    - Dawson French
+    - Olivia Hill
+    - Connor Tessaro
+    - Ashley Zheng
     """
 )
