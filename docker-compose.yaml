@@ -1,27 +1,44 @@
 services:
   app:
     build: ./app
-    container_name: web-app
-    hostname: web-app
-    volumes: ["./app/src:/appcode"]
+    container_name: therapy-frontend
+    hostname: therapy-frontend
+    volumes: ["./app/src:/app/src"]
     ports:
       - 8501:8501
+    depends_on:
+      - api
+      - db
+    environment:
+      - API_URL=http://therapy-api:4000
 
   api:
     build: ./api
-    container_name: web-api
-    hostname: web-api
-    volumes: ["./api:/apicode"]
+    container_name: therapy-api
+    hostname: therapy-api
+    volumes: ["./api:/app"]
     ports:
       - 4000:4000
+    depends_on:
+      - db
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
 
   db:
     env_file:
       - ./api/.env
-    image: mysql:9
-    container_name: mysql_db
+    image: mysql:8.0
+    container_name: therapy-db
     hostname: db
     volumes:
       - ./database-files:/docker-entrypoint-initdb.d/:ro
+      - therapy_db_data:/var/lib/mysql
     ports:
-      - 3200:3306
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=therapy_db
+
+volumes:
+  therapy_db_data:
