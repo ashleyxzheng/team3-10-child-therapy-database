@@ -1,11 +1,13 @@
 import streamlit as st
+
+# Must be the first Streamlit command
+st.set_page_config(page_title="Child Therapy Chat", page_icon="👶")
+
 from modules.nav import SideBarLinks
 import random
 import time
 
 SideBarLinks()
-
-st.set_page_config(page_title="Child Therapy Chat", page_icon="👶")
 
 st.title("Child Therapy Chat Simulator 👶")
 
