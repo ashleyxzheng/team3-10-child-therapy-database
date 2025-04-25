@@ -10,7 +10,10 @@ st.markdown(
     ## Overview
     The Child Therapy Management System is a comprehensive platform designed to facilitate art therapy sessions 
     for children with chronic diseases. Our system connects therapists, art therapy specialists, children, and 
-    their guardians in a supportive digital environment.
+    their guardians in a supportive digital environment. An online platform designed to train pediatric psychologists 
+    in using art therapy to support children with chronic illnesses. The platform features interactive modules and
+    virtual patients.
+
 
     ## Key Features
     - **Interactive Art Therapy**: Engaging art therapy modules designed for children with chronic conditions
