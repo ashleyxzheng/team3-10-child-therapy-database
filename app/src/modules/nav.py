@@ -59,46 +59,31 @@ def AdminPageNav():
 # --------------------------------Links Function -----------------------------------------------
 def SideBarLinks(show_home=False):
     """
-    This function handles adding links to the sidebar of the app based upon the logged-in user's role, which was put in the streamlit session_state object when logging in.
+    Controls the links displayed in the left-side panel of the app.
     """
+    st.sidebar.markdown("### Navigation")
 
-    # add a logo to the sidebar always
-    st.sidebar.image("assets/logo.png", width=150)
-
-    # If there is no logged in user, redirect to the Home (Landing) page
-    if "authenticated" not in st.session_state:
-        st.session_state.authenticated = False
-        st.switch_page("Home.py")
-
-    if show_home:
-        # Show the Home page link (the landing page)
-        HomeNav()
-
-    # Show the other page navigators depending on the users' role.
-    if st.session_state["authenticated"]:
-
-        # Show World Bank Link and Map Demo Link if the user is a political strategy advisor role.
-        if st.session_state["role"] == "pol_strat_advisor":
-            PolStratAdvHomeNav()
-            WorldBankVizNav()
-            MapDemoNav()
-
-        # If the user role is usaid worker, show the Api Testing page
-        if st.session_state["role"] == "usaid_worker":
-            PredictionNav()
-            ApiTestNav()
-            ClassificationNav()
-
-        # If the user is an administrator, give them access to the administrator pages
-        if st.session_state["role"] == "administrator":
-            AdminPageNav()
-
-    # Always show the About page at the bottom of the list of links
-    AboutPageNav()
-
-    if st.session_state["authenticated"]:
-        # Always show a logout button if there is a logged in user
-        if st.sidebar.button("Logout"):
-            del st.session_state["role"]
-            del st.session_state["authenticated"]
-            st.switch_page("Home.py")
+    # Add navigation links based on user role
+    if not st.session_state.get('authenticated', False):
+        if show_home:
+            st.sidebar.page_link("Home.py", label="Home")
+        st.sidebar.page_link("pages/30_About.py", label="About")
+    else:
+        role = st.session_state.get('role', '')
+        
+        if role == 'therapist':
+            st.sidebar.page_link("pages/10_Therapist_Home.py", label="Home")
+            st.sidebar.page_link("pages/11_Patient_List.py", label="Patient List")
+            st.sidebar.page_link("pages/12_Art_Therapy.py", label="Art Therapy")
+        elif role == 'art_specialist':
+            st.sidebar.page_link("pages/20_Specialist_Home.py", label="Home")
+            st.sidebar.page_link("pages/21_Review_Art.py", label="Review Art")
+        elif role == 'child':
+            st.sidebar.page_link("pages/30_Child_Home.py", label="Home")
+            st.sidebar.page_link("pages/31_Art_Canvas.py", label="Art Canvas")
+        elif role == 'guardian':
+            st.sidebar.page_link("pages/40_Guardian_Home.py", label="Home")
+            st.sidebar.page_link("pages/41_Child_Progress.py", label="Child Progress")
+        
+        st.sidebar.page_link("Home.py", label="Logout")
+        st.sidebar.page_link("pages/30_About.py", label="About")
